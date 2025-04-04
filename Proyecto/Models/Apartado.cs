@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proyecto.Models
 {
-    internal class Apartado
+    public class Apartado
     {
 
         public int  IDApartado { get; set; }

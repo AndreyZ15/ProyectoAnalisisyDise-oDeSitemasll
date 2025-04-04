@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proyecto.Models
 {
-    internal class DetalleApartado
+    public class DetalleApartado
     {
 
         public int IDDetalleApartado { get; set; }  

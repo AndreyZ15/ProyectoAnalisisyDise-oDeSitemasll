@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Proyecto.Views.ReportesPage"
+             Title="Reportes">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30,0" Spacing="20">
+
+            <Label Text="Seleccione el tipo de reporte:"
+                   FontSize="Medium"
+                   FontAttributes="Bold"/>
+
+            <Picker x:Name="ReportesPicker" Title="Seleccione un reporte">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Ventas realizadas</x:String>
+                        <x:String>Apartados pendientes</x:String>
+                        <x:String>Inventario disponible</x:String>
+                        <x:String>Clientes destacados</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+            <Button Text="Generar Reporte"
+                    Clicked="OnGenerarReporteClicked"/>
+
+            <!-- Área para mostrar resultados -->
+            <CollectionView x:Name="ReportesCollectionView" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="10">
+                            <Label Text="{Binding}" FontSize="14"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Proyecto.Models
 {
-    internal class Producto
+    public class Producto
     {
 
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proyecto.Models
 {
-    internal class Exclusividad
+    public class Exclusividad
     {
         public int IDExclusividad { get; set; }
         public string IDProducto { get; set; }

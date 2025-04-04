@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Proyecto.Views.ClientesPage"
+             Title="ClientesPage">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30,0" Spacing="25">
+
+            <!-- Nombre del Cliente -->
+            <Entry
+                x:Name="NombreClienteEntry"
+                Placeholder="Nombre del cliente"
+                 />
+
+            <!-- Apellido del Cliente -->
+            <Entry
+                x:Name="ApellidoClienteEntry"
+                Placeholder="Apellido del cliente"
+                />
+
+            <!-- Correo del Cliente -->
+            <Entry
+                x:Name="CorreoClienteEntry"
+                Placeholder="Correo del cliente"
+                Keyboard="Email"
+                 />
+
+            <!-- Teléfono del Cliente -->
+            <Entry
+                x:Name="TelefonoClienteEntry"
+                Placeholder="Teléfono del cliente"
+                Keyboard="Telephone"
+                />
+
+            <!-- Botón para agregar el cliente -->
+            <Button
+                x:Name="AgregarClienteBtn"
+                Text="Agregar Cliente"
+                Clicked="OnAgregarClienteClicked"
+                HorizontalOptions="Fill" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
+

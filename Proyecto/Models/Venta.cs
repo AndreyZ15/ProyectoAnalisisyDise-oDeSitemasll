@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proyecto.Models
 {
-    internal class Venta
+    public class Venta
     {
 
         public int IDVenta { get; set; }

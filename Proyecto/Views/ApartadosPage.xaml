@@ -1,0 +1,45 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Proyecto.Views.ApartadosPage"
+             Title="Apartados">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30,0" Spacing="20">
+
+            <!-- ID del Cliente -->
+            <Entry
+                x:Name="IDClienteEntry"
+                Placeholder="ID del Cliente"
+                />
+
+            <!-- Abono -->
+            <Entry
+                x:Name="AbonoEntry"
+                Placeholder="Abono inicial"
+                Keyboard="Numeric"
+                />
+
+            <!-- Total -->
+            <Entry
+                x:Name="TotalEntry"
+                Placeholder="Total a pagar"
+                Keyboard="Numeric"
+                />
+
+            <!-- Estado de Completado -->
+            <StackLayout Orientation="Horizontal">
+                <Label Text="¿Completado?" VerticalOptions="Center"/>
+                <Switch x:Name="CompletadoSwitch"/>
+            </StackLayout>
+
+            <!-- Botón para agregar el apartado -->
+            <Button
+                x:Name="AgregarApartadoBtn"
+                Text="Agregar Apartado"
+                Clicked="OnAgregarApartadoClicked"
+                HorizontalOptions="Fill" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

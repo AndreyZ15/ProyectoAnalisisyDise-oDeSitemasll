@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Proyecto.Models
 {
-    internal class Cliente
+    public class Cliente
     {
 
         public string  IDCliente { get; set; }

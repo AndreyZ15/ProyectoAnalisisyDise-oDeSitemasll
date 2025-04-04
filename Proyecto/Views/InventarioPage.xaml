@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Proyecto.Views.InventarioPage"
+             Title="Inventario">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30,0" Spacing="20">
+
+            <!-- ID del Producto -->
+            <Entry x:Name="IDProductoEntry"
+                   Placeholder="ID del Producto"/>
+
+            <!-- Nombre del Producto -->
+            <Entry x:Name="NombreEntry"
+                   Placeholder="Nombre"/>
+
+            <!-- Color -->
+            <Entry x:Name="ColorEntry"
+                   Placeholder="Color"/>
+
+            <!-- Marca -->
+            <Entry x:Name="MarcaEntry"
+                   Placeholder="Marca"/>
+
+            <!-- Talla -->
+            <Entry x:Name="TallaEntry"
+                   Placeholder="Talla"/>
+
+            <!-- Detalle -->
+            <Entry x:Name="DetalleEntry"
+                   Placeholder="Detalle"/>
+
+            <!-- Precio -->
+            <Entry x:Name="PrecioEntry"
+                   Placeholder="Precio"
+                   Keyboard="Numeric"/>
+
+            <!-- Botones de acción -->
+            <StackLayout Orientation="Horizontal" Spacing="10">
+                <Button Text="Agregar" Clicked="OnAgregarProductoClicked"/>
+                <Button Text="Editar" Clicked="OnEditarProductoClicked"/>
+                <Button Text="Eliminar" Clicked="OnEliminarProductoClicked"/>
+                <Button Text="Actualizar" Clicked="OnActualizarProductosClicked"/>
+            </StackLayout>
+
+            <!-- Lista de Productos -->
+            <CollectionView x:Name="ProductosCollectionView" SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="10">
+                            <Label Text="{Binding Nombre}" FontAttributes="Bold"/>
+                            <Label Text="{Binding Marca}"/>
+                            <Label Text="{Binding Color}"/>
+                            <Label Text="{Binding Precio, StringFormat='₡{0:N2}'}" TextColor="Green"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
+
