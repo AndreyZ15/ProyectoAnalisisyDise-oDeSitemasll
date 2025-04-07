@@ -1,5 +1,5 @@
-namespace Proyecto.Views;
-
+//namespace Proyecto.Views;
+/*
 public partial class EncargosPage : ContentPage
 {
 	public EncargosPage()
@@ -7,3 +7,4 @@ public partial class EncargosPage : ContentPage
 		InitializeComponent();
 	}
 }
+*/

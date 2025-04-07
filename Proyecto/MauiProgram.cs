@@ -1,4 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
+using Proyecto.Services;
+using Microsoft.Extensions.Logging;
+using Proyecto.Services;
 
 namespace Proyecto
 {
@@ -15,10 +18,13 @@ namespace Proyecto
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-#if DEBUG
-    		builder.Logging.AddDebug();
-#endif
+            // Configurar FirebaseService con la URL de tu Firebase Realtime Database
+            string firebaseApiKey = "https://proyectoanalisisydiseno2-default-rtdb.firebaseio.com/";
+            builder.Services.AddSingleton(new FireBaseService(firebaseApiKey));
 
+#if DEBUG
+            builder.Logging.AddDebug();
+#endif
             return builder.Build();
         }
     }

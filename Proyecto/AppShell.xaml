@@ -6,26 +6,56 @@
     xmlns:local="clr-namespace:Proyecto"
     xmlns:views="clr-namespace:Proyecto.Views"
     Shell.FlyoutBehavior="Flyout"
-    Title="Proyecto">
+    Title="Sistema de Gestión">
+
+    <Shell.FlyoutHeader>
+        <Grid HeightRequest="100" BackgroundColor="#512BD4">
+            <Label 
+                Text="Menú" 
+                FontSize="Large" 
+                TextColor="White" 
+                HorizontalOptions="Center" 
+                VerticalOptions="Center"/>
+        </Grid>
+    </Shell.FlyoutHeader>
 
     <ShellContent
-        Title="Home"
+        Title="Inicio"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
     <ShellContent
         Title="Clientes"
         ContentTemplate="{DataTemplate views:ClientesPage}"
-        Route="ClientePage" />
-    
+        Route="ClientesPage" />
+
     <ShellContent
-     Title="Apartados"
-     ContentTemplate="{DataTemplate views:ApartadosPage}"
-     Route="ApartadosPage" />
-    
+        Title="Inventario"
+        ContentTemplate="{DataTemplate views:InventarioPage}"
+        Route="InventarioPage" />
+
     <ShellContent
-     Title="Inventario"
-     ContentTemplate="{DataTemplate views:InventarioPage}"
-     Route="InventarioPage" />
+        Title="Ventas"
+        ContentTemplate="{DataTemplate views:EncargosPage}"
+        Route="EncargosPage" />
+
+    <ShellContent
+        Title="Apartados"
+        ContentTemplate="{DataTemplate views:ApartadosPage}"
+        Route="ApartadosPage" />
+
+    <ShellContent
+        Title="Reportes"
+        ContentTemplate="{DataTemplate views:ReportesPage}"
+        Route="ReportesPage" />
+
+    <Shell.FlyoutFooter>
+        <StackLayout Padding="20">
+            <Label 
+                Text="© 2025 Sistema de Gestión" 
+                HorizontalOptions="Center" 
+                Opacity="0.6" />
+        </StackLayout>
+    </Shell.FlyoutFooter>
 
 </Shell>

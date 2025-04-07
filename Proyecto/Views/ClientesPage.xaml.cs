@@ -1,31 +1,58 @@
 using Proyecto.Models;
-//using Proyecto.ViewModels;
+using Proyecto.Services;
 using System;
+using System.Collections.ObjectModel;
 
 namespace Proyecto.Views;
 
+public partial class ClientesPage : ContentPage
+{
+    private readonly FireBaseService _firebaseService;
+    public ObservableCollection<Cliente> Clientes { get; set; } = new ObservableCollection<Cliente>();
 
-    public partial class ClientesPage : ContentPage
+    public ClientesPage()
     {
-        public ClientesPage()
+        InitializeComponent();
+        _firebaseService = Application.Current.Handler.MauiContext.Services.GetService<FireBaseService>();
+
+        // Cargar los clientes al iniciar la página
+        CargarClientes();
+    }
+
+    private async void CargarClientes()
+    {
+        try
         {
-            InitializeComponent();
+            var clientes = await _firebaseService.GetAllClientesAsync();
+            Clientes.Clear();
+            foreach (var cliente in clientes)
+            {
+                Clientes.Add(cliente);
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"No se pudieron cargar los clientes: {ex.Message}", "OK");
+        }
+    }
+
+    private async void OnAgregarClienteClicked(object sender, EventArgs e)
+    {
+        string nombre = NombreClienteEntry.Text;
+        string apellido = ApellidoClienteEntry.Text;
+        string correo = CorreoClienteEntry.Text;
+        string telefono = TelefonoClienteEntry.Text;
+
+        // Validación
+        if (string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(apellido) ||
+            string.IsNullOrEmpty(correo) || string.IsNullOrEmpty(telefono))
+        {
+            await DisplayAlert("Error", "Todos los campos son obligatorios", "OK");
+            return;
         }
 
-        private async void OnAgregarClienteClicked(object sender, EventArgs e)
+        try
         {
-            string nombre = NombreClienteEntry.Text;
-            string apellido = ApellidoClienteEntry.Text;
-            string correo = CorreoClienteEntry.Text;
-            string telefono = TelefonoClienteEntry.Text;
-
-            // Validación
-            if (string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(apellido) || string.IsNullOrEmpty(correo) || string.IsNullOrEmpty(telefono))
-            {
-                await DisplayAlert("Error", "Todos los campos son obligatorios", "OK");
-                return;
-            }
-
             // Crear el objeto Cliente
             Cliente nuevoCliente = new Cliente
             {
@@ -33,19 +60,31 @@ namespace Proyecto.Views;
                 Apellido = apellido,
                 Correo = correo,
                 Telefono = telefono,
-                IDCliente = Guid.NewGuid().ToString()  // Puedes usar un ID único para cada cliente
+                IDCliente = Guid.NewGuid().ToString()
             };
 
-            // Aquí puedes agregar la lógica para guardar este cliente en la base de datos (por ejemplo, Firebase)
-            // Por ejemplo, llamar a un método del ViewModel o un servicio de Firebase
+            // Guardar en Firebase
+            await _firebaseService.AddClienteAsync(nuevoCliente);
+
+            // Actualizar la colección local
+            Clientes.Add(nuevoCliente);
 
             // Limpiar los campos después de agregar el cliente
-            NombreClienteEntry.Text = string.Empty;
-            ApellidoClienteEntry.Text = string.Empty;
-            CorreoClienteEntry.Text = string.Empty;
-            TelefonoClienteEntry.Text = string.Empty;
+            LimpiarCampos();
 
             await DisplayAlert("Éxito", "Cliente agregado correctamente", "OK");
         }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"No se pudo guardar el cliente: {ex.Message}", "OK");
+        }
     }
 
+    private void LimpiarCampos()
+    {
+        NombreClienteEntry.Text = string.Empty;
+        ApellidoClienteEntry.Text = string.Empty;
+        CorreoClienteEntry.Text = string.Empty;
+        TelefonoClienteEntry.Text = string.Empty;
+    }
+}
