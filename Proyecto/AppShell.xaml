@@ -36,8 +36,8 @@
 
     <ShellContent
         Title="Ventas"
-        ContentTemplate="{DataTemplate views:EncargosPage}"
-        Route="EncargosPage" />
+        ContentTemplate="{DataTemplate views:VentasPage}"
+        Route="VentasPage" />
 
     <ShellContent
         Title="Apartados"

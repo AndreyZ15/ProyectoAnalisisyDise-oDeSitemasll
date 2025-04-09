@@ -391,6 +391,26 @@ namespace Proyecto.Services
 
             return nextId;
         }
+        public async Task<int> AddVentaConDetallesAsync(Venta venta)
+        {
+            int ventaId = await AddVentaAsync(venta);
+
+            foreach (var detalle in venta.Detalles)
+            {
+                detalle.IDVenta = ventaId;
+                await AddDetalleVentaAsync(detalle);
+            }
+
+            return ventaId;
+        }
+        public async Task<Venta> GetVentaCompletaAsync(int idVenta)
+        {
+            var venta = await GetVentaAsync(idVenta);
+            venta.Detalles = await GetDetallesVentaAsync(idVenta);
+            venta.Cliente = await GetClienteAsync(venta.IDCliente);
+            return venta;
+        }
+
 
         #endregion
     }
