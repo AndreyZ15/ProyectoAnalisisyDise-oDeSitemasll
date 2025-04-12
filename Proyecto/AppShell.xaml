@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Shell
+    
+    Shell.FlyoutWidth="190"
     x:Class="Proyecto.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Proyecto"
     xmlns:views="clr-namespace:Proyecto.Views"
     Shell.FlyoutBehavior="Flyout"
-    Title="Sistema de Gestión">
+    Title="GALALUNA"
+    FlyoutBackgroundColor="Beige"
+    IconImageSource="lista.png">
+    
 
     <Shell.FlyoutHeader>
-        <Grid HeightRequest="100" BackgroundColor="#512BD4">
+        <Grid HeightRequest="80" BackgroundColor="RosyBrown">
             <Label 
                 Text="Menú" 
+                FontFamily="Montserrat"
                 FontSize="Large" 
                 TextColor="White" 
                 HorizontalOptions="Center" 
@@ -19,40 +25,68 @@
         </Grid>
     </Shell.FlyoutHeader>
 
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid Padding="20">
+                <Label 
+                    Text="{Binding Title}" 
+                    FontFamily="Montserrat" 
+                    FontSize="20" 
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center"
+                    TextColor="Black" 
+                    />
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+
     <ShellContent
         Title="Inicio"
+        Shell.BackgroundColor="Beige"
+        Shell.TitleColor="gray"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
+        
 
     <ShellContent
         Title="Clientes"
+        Shell.BackgroundColor="beige"
+        Shell.TitleColor="gray"
         ContentTemplate="{DataTemplate views:ClientesPage}"
-        Route="ClientesPage" />
+        Route="Clientes" />
 
     <ShellContent
         Title="Inventario"
+        Shell.BackgroundColor="Beige"
+        Shell.TitleColor="gray"
         ContentTemplate="{DataTemplate views:InventarioPage}"
-        Route="InventarioPage" />
+        Route="Inventario" />
 
     <ShellContent
         Title="Ventas"
+        Shell.BackgroundColor="Beige"
+        Shell.TitleColor="gray"
         ContentTemplate="{DataTemplate views:VentasPage}"
-        Route="VentasPage" />
+        Route="Ventas" />
 
     <ShellContent
         Title="Apartados"
+        Shell.BackgroundColor="Beige"
+        Shell.TitleColor="gray"
         ContentTemplate="{DataTemplate views:ApartadosPage}"
-        Route="ApartadosPage" />
+        Route="Apartados" />
 
     <ShellContent
         Title="Reportes"
+        Shell.BackgroundColor="Transparent"
+        Shell.TitleColor="gray"
         ContentTemplate="{DataTemplate views:ReportesPage}"
-        Route="ReportesPage" />
+        Route="Reportes" />
 
     <Shell.FlyoutFooter>
         <StackLayout Padding="20">
             <Label 
-                Text="© 2025 Sistema de Gestión" 
+                Text="© 2025 GALALUNA Boutique" 
                 HorizontalOptions="Center" 
                 Opacity="0.6" />
         </StackLayout>

@@ -1,47 +1,131 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Proyecto.Views.ClientesPage"
-             Title="ClientesPage">
+             Title="Clientes"
+             BackgroundColor="#ac9e69"
+             >
 
     <ScrollView>
-        <VerticalStackLayout Padding="30,0" Spacing="25">
+        <VerticalStackLayout Padding="80" Spacing="20">
 
+            <Border StrokeThickness="0" BackgroundColor="Transparent">
+                <Border.Shadow>
+                    <Shadow Brush="Gray" Radius="5" Opacity="0.6" Offset="2,2"/>
+                </Border.Shadow>
+                <Label
+                Text="¡Agrega un nuevo cliente!"
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                FontFamily="Montserrat"
+                FontSize="30"
+                FontAttributes="Italic"
+                TextColor="Black"
+                Padding="0,0,0,0"/>
+                
+            </Border>
+
+
+            <Label
+                Text=""
+                
+            />
             <!-- Nombre del Cliente -->
             <Entry
                 x:Name="NombreClienteEntry"
                 Placeholder="Nombre del cliente"
-                 />
+                PlaceholderColor="#b5b5b5"
+                FontFamily="Montserrat"
+                FontSize="17"
+                HorizontalTextAlignment="Center"
+                BackgroundColor="#f9f2f5"
+                WidthRequest="500"
+                
+                />
 
             <!-- Apellido del Cliente -->
             <Entry
                 x:Name="ApellidoClienteEntry"
                 Placeholder="Apellido del cliente"
-                />
+                PlaceholderColor="#b5b5b5"
+                FontFamily="Montserrat"
+                FontSize="17"
+                HorizontalTextAlignment="Center"
+                BackgroundColor="#f9f2f5"
+                WidthRequest="500"/>
 
             <!-- Correo del Cliente -->
             <Entry
                 x:Name="CorreoClienteEntry"
-                Placeholder="Correo del cliente"
+                Placeholder="Correo electrónico del cliente"
+                PlaceholderColor="#b5b5b5"
                 Keyboard="Email"
-                 />
+                FontFamily="Montserrat"
+                FontSize="17"
+                HorizontalTextAlignment="Center"
+                BackgroundColor="#f9f2f5"
+                WidthRequest="500"/>
 
             <!-- Teléfono del Cliente -->
             <Entry
                 x:Name="TelefonoClienteEntry"
                 Placeholder="Teléfono del cliente"
                 Keyboard="Telephone"
+                FontFamily="Montserrat"
+                FontSize="17"
+                PlaceholderColor="#b5b5b5"
+                HorizontalTextAlignment="Center"
+                BackgroundColor="#f9f2f5"
+                WidthRequest="500"
                 />
 
-            <!-- Botón para agregar el cliente -->
-            <Button
-                x:Name="AgregarClienteBtn"
-                Text="Agregar Cliente"
-                Clicked="OnAgregarClienteClicked"
-                HorizontalOptions="Fill" />
+
+            <Label
+                Text=""
+                
+            />
+
+            <!-- Botón Mejorado -->
+            <Border StrokeThickness="0"
+                    BackgroundColor="Transparent"
+                    WidthRequest="300"
+                    HeightRequest="40"
+                    Padding="0"
+                    StrokeShape="RoundRectangle 15">
+                <Border.Shadow>
+                    <Shadow Brush="Black" 
+                            Radius="12"
+                            Opacity="0.4"/>
+                </Border.Shadow>
+
+                <Button x:Name="AgregarClienteBtn"
+                        Text="Agregar Cliente"
+                        
+                        Clicked="OnAgregarClienteClicked"
+                        FontFamily="Montserrat"
+                        FontAttributes="Bold"
+                        FontSize="22"
+                        TextColor="White"
+                        WidthRequest="300"
+                        HeightRequest="40"
+                        Padding="10"
+                        CornerRadius="15"
+                        BackgroundColor="#a37281"
+                        Margin="0,0,0,0"
+                        VerticalOptions="Center">
+                        
+
+                    <!-- Efecto de Pulsación -->
+                    <Button.Triggers>
+                        <Trigger TargetType="Button" Property="IsPressed" Value="True">
+                            <Setter Property="Scale" Value="0.95"/>
+                            <Setter Property="Opacity" Value="0.8"/>
+                        </Trigger>
+                    </Button.Triggers>
+
+                </Button>
+            </Border>
 
         </VerticalStackLayout>
     </ScrollView>
 
 </ContentPage>
-

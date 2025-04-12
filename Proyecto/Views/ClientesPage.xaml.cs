@@ -51,6 +51,24 @@ public partial class ClientesPage : ContentPage
             return;
         }
 
+        if (!nombre.All(char.IsLetter) || !apellido.All(char.IsLetter))
+        {
+            await DisplayAlert("Error", "El nombre y el apellido deben contener solo letras", "OK");
+            return;
+        }
+
+        if (!correo.Contains("@") || !correo.Contains("."))
+        {
+            await DisplayAlert("Error", "El correo electrónico no es válido", "OK");
+            return;
+        }
+
+        if (!telefono.All(char.IsDigit))
+        {
+            await DisplayAlert("Error", "El teléfono debe contener solo números", "OK");
+            return;
+        }
+
         try
         {
             // Crear el objeto Cliente
