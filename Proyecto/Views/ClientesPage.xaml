@@ -50,6 +50,7 @@
                 FontSize="17"
                 HorizontalTextAlignment="Center"
                 BackgroundColor="#f9f2f5"
+                TextColor="Black"
                 WidthRequest="500"
                 
                 />
@@ -63,6 +64,8 @@
                 FontSize="17"
                 HorizontalTextAlignment="Center"
                 BackgroundColor="#f9f2f5"
+                TextColor="Black"
+
                 WidthRequest="500"/>
 
             <!-- Correo del Cliente -->
@@ -75,6 +78,7 @@
                 FontSize="17"
                 HorizontalTextAlignment="Center"
                 BackgroundColor="#f9f2f5"
+                TextColor="Black"
                 WidthRequest="500"/>
 
             <!-- Teléfono del Cliente -->
@@ -87,6 +91,7 @@
                 PlaceholderColor="#b5b5b5"
                 HorizontalTextAlignment="Center"
                 BackgroundColor="#f9f2f5"
+                TextColor="Black"
                 WidthRequest="500"
                 />
 

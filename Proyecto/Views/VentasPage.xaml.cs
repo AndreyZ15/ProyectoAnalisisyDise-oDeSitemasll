@@ -14,7 +14,8 @@ public partial class VentasPage : ContentPage
     public VentasPage()
     {
         InitializeComponent();
-        _firebaseService = Application.Current.Handler.MauiContext.Services.GetService<FireBaseService>();
+        _firebaseService = Application.Current.Handler?.MauiContext?.Services.GetService<FireBaseService>()
+                           ?? throw new InvalidOperationException("FireBaseService not found in service provider.");
 
         ClientePicker.ItemsSource = Clientes;
         MetodoPagoPicker.ItemsSource = new List<string> { "Efectivo", "Tarjeta", "Transferencia" };
@@ -71,7 +72,7 @@ public partial class VentasPage : ContentPage
             return;
         }
 
-        if (!decimal.TryParse(TotalEntry.Text, out decimal total) || total <= 0)
+        if (!decimal.TryParse(TotalVentaEntry.Text, out decimal total) || total <= 0)
         {
             await DisplayAlert("Error", "Ingrese un total válido.", "OK");
             return;
@@ -105,6 +106,6 @@ public partial class VentasPage : ContentPage
     {
         ClientePicker.SelectedItem = null;
         MetodoPagoPicker.SelectedItem = null;
-        TotalEntry.Text = string.Empty;
+        TotalVentaEntry.Text = string.Empty;
     }
 }

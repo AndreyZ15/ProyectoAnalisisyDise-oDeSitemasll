@@ -6,13 +6,9 @@
 
     <ContentPage.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-            <!-- Rosado muy pálido tipo blush -->
             <GradientStop Color="#FFF1F3" Offset="0.0"/>
-            <!-- Salmón claro pastel -->
             <GradientStop Color="#FFD6D0" Offset="0.3"/>
-            <!-- Rosado suave tipo piel -->
             <GradientStop Color="LightPink" Offset="0.6"/>
-            <!-- Coral pálido / rosado cálido -->
             <GradientStop Color="Plum" Offset="1.0"/>
         </LinearGradientBrush>
     </ContentPage.Background>
@@ -20,7 +16,7 @@
     <ScrollView>
         <VerticalStackLayout Padding="80,20" Spacing="20">
 
-            <!-- Título con sombra -->
+            <!-- Título -->
             <Border StrokeThickness="0" BackgroundColor="Transparent">
                 <Border.Shadow>
                     <Shadow Brush="Gray" Radius="5" Opacity="0.6" Offset="2,2"/>
@@ -34,52 +30,53 @@
                     TextColor="Black"/>
             </Border>
 
-            <!-- ID Cliente -->
-            <Entry x:Name="IDClienteEntry"
-                   Placeholder="ID del Cliente"
-                   PlaceholderColor="#b5b5b5"
-                   FontFamily="Montserrat"
-                   FontSize="17"
-                   HorizontalTextAlignment="Center"
-                   BackgroundColor="#f9f2f5"
-                   WidthRequest="500"/>
+            <!-- Picker para Cliente -->
+            <Picker x:Name="ClientePicker"
+                    Title="Seleccionar Cliente"
+                    FontFamily="Montserrat"
+                    FontSize="17"
+                    TextColor="Black"
+                    BackgroundColor="#f9f2f5"
+                    HorizontalTextAlignment="Center"
+                    WidthRequest="500" 
+                    TitleColor="Black"
+                    ItemDisplayBinding="{Binding Nombre}"/>
 
-            <!-- Nombre Cliente -->
-            <Entry x:Name="NombreClienteEntry"
-                   Placeholder="Nombre del cliente"
-                   PlaceholderColor="#b5b5b5"
-                   FontFamily="Montserrat"
-                   FontSize="17"
-                   HorizontalTextAlignment="Center"
-                   BackgroundColor="#f9f2f5"
-                   WidthRequest="500"/>
+            <StackLayout>
+                <!-- Título para Total de la Venta -->
+                <Label Text="Total de la venta"
+                     FontFamily="Montserrat"
+                     FontSize="17"
+                     TextColor="Black"
+                       HorizontalTextAlignment="Center"
+                     Margin="0,10,0,5"/>
+                <!-- Espaciado encima y debajo del título -->
 
-            <!-- Total de Venta -->
-            <Entry x:Name="TotalVentaEntry"
-                   Placeholder="Total de la venta"
-                   Keyboard="Numeric"
-                   PlaceholderColor="#b5b5b5"
-                   FontFamily="Montserrat"
-                   FontSize="17"
-                   HorizontalTextAlignment="Center"
-                   BackgroundColor="#f9f2f5"
-                   WidthRequest="500"/>
-
-            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
-                <!-- Picker sin etiqueta, solo el Picker centrado -->
-                <Picker x:Name="MetodoPagoPicker"
+                <!-- Campo de Entrada para Total de la Venta -->
+                <Entry x:Name="TotalVentaEntry"
+                    Placeholder=""
+                    Keyboard="Numeric"
+                    PlaceholderColor="#b5b5b5"
+                    FontFamily="Montserrat"
+                    FontSize="17"
+                       
+                    BackgroundColor="#f9f2f5"
+                    WidthRequest="500"/>
+            </StackLayout>
+            
+            
+            <!-- Método de Pago -->
+            <Picker x:Name="MetodoPagoPicker"
                     Title="Seleccionar Método"
                     FontFamily="Montserrat"
                     FontSize="17"
                     TextColor="Black"
                     BackgroundColor="#f9f2f5"
                     HorizontalTextAlignment="Center"
-                    WidthRequest="500"
-                   SelectedIndexChanged="OnMetodoPagoSelectedIndexChanged"/>
-            </HorizontalStackLayout>
+                    TitleColor="Black"
+                    WidthRequest="500" />
 
-
-            <!-- Estado de Completado -->
+            <!-- Estado Completado -->
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
                 <Label Text="Completado"
                        FontFamily="Montserrat"
@@ -91,7 +88,7 @@
                         HorizontalOptions="Start"/>
             </HorizontalStackLayout>
 
-            <!-- Botón estilizado -->
+            <!-- Botón Agregar Venta -->
             <Border StrokeThickness="0"
                     BackgroundColor="Transparent"
                     WidthRequest="300"
@@ -99,11 +96,8 @@
                     Padding="0"
                     StrokeShape="RoundRectangle 15">
                 <Border.Shadow>
-                    <Shadow Brush="Black" 
-                            Radius="12"
-                            Opacity="0.4"/>
+                    <Shadow Brush="Black" Radius="12" Opacity="0.4"/>
                 </Border.Shadow>
-
                 <Button x:Name="AgregarVentaBtn"
                         Text="Agregar Venta"
                         Clicked="OnAgregarVentaClicked"
