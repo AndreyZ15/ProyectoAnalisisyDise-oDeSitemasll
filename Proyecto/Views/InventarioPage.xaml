@@ -4,56 +4,142 @@
              x:Class="Proyecto.Views.InventarioPage"
              Title="Inventario">
 
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <!-- Rosado muy pálido tipo blush -->
+            <GradientStop Color="#FFF1F3" Offset="0.0"/>
+            <!-- Salmón claro pastel -->
+            <GradientStop Color="#FFD6D0" Offset="0.3"/>
+            <!-- Rosado suave tipo piel -->
+            <GradientStop Color="LightPink" Offset="0.6"/>
+            <!-- Coral pálido / rosado cálido -->
+            <GradientStop Color="Plum" Offset="1.0"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+
     <ScrollView>
-        <VerticalStackLayout Padding="30,0" Spacing="20">
+        <VerticalStackLayout Padding="80" Spacing="20">
 
-            <!-- ID del Producto -->
+            <!-- Título -->
+            <Border StrokeThickness="0" BackgroundColor="Transparent">
+                <Border.Shadow>
+                    <Shadow Brush="Gray" Radius="5" Opacity="0.6" Offset="2,2"/>
+                </Border.Shadow>
+                <Label
+                    Text="¡Gestiona tu inventario!"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    FontFamily="Montserrat"
+                    FontSize="30"
+                    FontAttributes="Italic"
+                    TextColor="Black"/>
+            </Border>
+
+            <!-- Entradas de datos -->
             <Entry x:Name="IDProductoEntry"
-                   Placeholder="ID del Producto"/>
+                   Placeholder="ID del Producto"
+                   PlaceholderColor="#b5b5b5"
+                   FontFamily="Montserrat"
+                   FontSize="17"
+                   HorizontalTextAlignment="Center"
+                   BackgroundColor="#f9f2f5"
+                   WidthRequest="500"
+                   TextColor="Black"/>
 
-            <!-- Nombre del Producto -->
             <Entry x:Name="NombreEntry"
-                   Placeholder="Nombre"/>
+                   Placeholder="Nombre"
+                   PlaceholderColor="#b5b5b5"
+                   FontFamily="Montserrat"
+                   FontSize="17"
+                   HorizontalTextAlignment="Center"
+                   BackgroundColor="#f9f2f5"
+                   WidthRequest="500"
+                   TextColor="Black"/>
 
-            <!-- Color -->
             <Entry x:Name="ColorEntry"
-                   Placeholder="Color"/>
+                   Placeholder="Color"
+                   PlaceholderColor="#b5b5b5"
+                   FontFamily="Montserrat"
+                   FontSize="17"
+                   HorizontalTextAlignment="Center"
+                   BackgroundColor="#f9f2f5"
+                   WidthRequest="500"
+                   TextColor="Black"/>
 
-            <!-- Marca -->
             <Entry x:Name="MarcaEntry"
-                   Placeholder="Marca"/>
+                   Placeholder="Marca"
+                   PlaceholderColor="#b5b5b5"
+                   FontFamily="Montserrat"
+                   FontSize="17"
+                   HorizontalTextAlignment="Center"
+                   BackgroundColor="#f9f2f5"
+                   WidthRequest="500"
+                   TextColor="Black"/>
 
-            <!-- Talla -->
             <Entry x:Name="TallaEntry"
-                   Placeholder="Talla"/>
+                   Placeholder="Talla"
+                   PlaceholderColor="#b5b5b5"
+                   FontFamily="Montserrat"
+                   FontSize="17"
+                   HorizontalTextAlignment="Center"
+                   BackgroundColor="#f9f2f5"
+                   WidthRequest="500"
+                   TextColor="Black"/>
 
-            <!-- Detalle -->
             <Entry x:Name="DetalleEntry"
-                   Placeholder="Detalle"/>
+                   Placeholder="Detalle"
+                   PlaceholderColor="#b5b5b5"
+                   FontFamily="Montserrat"
+                   FontSize="17"
+                   HorizontalTextAlignment="Center"
+                   BackgroundColor="#f9f2f5"
+                   WidthRequest="500"
+                   TextColor="Black"/>
 
-            <!-- Precio -->
             <Entry x:Name="PrecioEntry"
                    Placeholder="Precio"
-                   Keyboard="Numeric"/>
+                   Keyboard="Numeric"
+                   PlaceholderColor="#b5b5b5"
+                   FontFamily="Montserrat"
+                   FontSize="17"
+                   HorizontalTextAlignment="Center"
+                   BackgroundColor="#f9f2f5"
+                   WidthRequest="500"
+                   TextColor="Black"/>
 
-            <!-- Botones de acción -->
-            <StackLayout Orientation="Horizontal" Spacing="10">
-                <Button Text="Agregar" Clicked="OnAgregarProductoClicked"/>
-                <Button Text="Editar" Clicked="OnEditarProductoClicked"/>
-                <Button Text="Eliminar" Clicked="OnEliminarProductoClicked"/>
-                <Button Text="Actualizar" Clicked="OnActualizarProductosClicked"/>
+            <!-- Botones -->
+            <StackLayout Orientation="Horizontal" Spacing="10" HorizontalOptions="Center">
+
+
+                <Button Text="Agregar" Clicked="OnAgregarProductoClicked"
+                        FontFamily="Montserrat" FontSize="16" BackgroundColor="#a37281"
+                        TextColor="White" WidthRequest="100" CornerRadius="10"/>
+                <Button Text="Editar" Clicked="OnEditarProductoClicked"
+                        FontFamily="Montserrat" FontSize="16" BackgroundColor="#a37281"
+                        TextColor="White" WidthRequest="100" CornerRadius="10"/>
+                <Button Text="Eliminar" Clicked="OnEliminarProductoClicked"
+                        FontFamily="Montserrat" FontSize="16" BackgroundColor="#a37281"
+                        TextColor="White" WidthRequest="100" CornerRadius="10"/>
+                <Button Text="Actualizar" Clicked="OnActualizarProductosClicked"
+                        FontFamily="Montserrat" FontSize="16" BackgroundColor="#a37281"
+                        TextColor="White" WidthRequest="100" CornerRadius="10"/>
             </StackLayout>
 
             <!-- Lista de Productos -->
             <CollectionView x:Name="ProductosCollectionView" SelectionMode="Single">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Padding="10">
-                            <Label Text="{Binding Nombre}" FontAttributes="Bold"/>
-                            <Label Text="{Binding Marca}"/>
-                            <Label Text="{Binding Color}"/>
-                            <Label Text="{Binding Precio, StringFormat='₡{0:N2}'}" TextColor="Green"/>
-                        </StackLayout>
+                        <Frame BackgroundColor="#fef9ef" Padding="10" CornerRadius="10" Margin="5">
+                            <StackLayout>
+                                <Label Text="{Binding Nombre}" FontAttributes="Bold" FontFamily="Montserrat"/>
+                                <Label Text="{Binding Marca}" FontFamily="Montserrat"/>
+                                <Label Text="{Binding Color}" FontFamily="Montserrat"/>
+                                <Label Text="{Binding Precio, StringFormat='₡{0:N2}'}"
+                                       FontFamily="Montserrat"
+                                       TextColor="Green"/>
+                            </StackLayout>
+                        </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
@@ -61,5 +147,4 @@
         </VerticalStackLayout>
     </ScrollView>
 
-</ContentPage>
-
+</ContentPage> 

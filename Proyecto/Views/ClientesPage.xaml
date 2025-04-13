@@ -1,9 +1,21 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Proyecto.Views.ClientesPage"
-             Title="Clientes"
-             BackgroundColor="#ac9e69"
-             >
+             Title="Clientes">
+
+
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <!-- Rosado muy pálido tipo blush -->
+            <GradientStop Color="#FFF1F3" Offset="0.0"/>
+            <!-- Salmón claro pastel -->
+            <GradientStop Color="#FFD6D0" Offset="0.3"/>
+            <!-- Rosado suave tipo piel -->
+            <GradientStop Color="LightPink" Offset="0.6"/>
+            <!-- Coral pálido / rosado cálido -->
+            <GradientStop Color="Plum" Offset="1.0"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
 
     <ScrollView>
         <VerticalStackLayout Padding="80" Spacing="20">

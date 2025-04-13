@@ -2,32 +2,130 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Proyecto.Views.VentasPage"
-             Title="Agregar Venta">
+             Title="Ventas">
+
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <!-- Rosado muy pálido tipo blush -->
+            <GradientStop Color="#FFF1F3" Offset="0.0"/>
+            <!-- Salmón claro pastel -->
+            <GradientStop Color="#FFD6D0" Offset="0.3"/>
+            <!-- Rosado suave tipo piel -->
+            <GradientStop Color="LightPink" Offset="0.6"/>
+            <!-- Coral pálido / rosado cálido -->
+            <GradientStop Color="Plum" Offset="1.0"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
 
     <ScrollView>
-        <VerticalStackLayout Padding="30" Spacing="15">
+        <VerticalStackLayout Padding="80,20" Spacing="20">
 
-            <Label Text="Cliente" FontAttributes="Bold"/>
-            <Picker x:Name="ClientePicker"
-                    Title="Selecciona un cliente"
-                    ItemDisplayBinding="{Binding Nombre}" />
+            <!-- Título con sombra -->
+            <Border StrokeThickness="0" BackgroundColor="Transparent">
+                <Border.Shadow>
+                    <Shadow Brush="Gray" Radius="5" Opacity="0.6" Offset="2,2"/>
+                </Border.Shadow>
+                <Label
+                    Text="Registrar una venta"
+                    HorizontalTextAlignment="Center"
+                    FontFamily="Montserrat"
+                    FontSize="30"
+                    FontAttributes="Italic"
+                    TextColor="Black"/>
+            </Border>
 
-            <Label Text="Método de Pago" FontAttributes="Bold"/>
-            <Picker x:Name="MetodoPagoPicker"
-                    Title="Selecciona un método" />
+            <!-- ID Cliente -->
+            <Entry x:Name="IDClienteEntry"
+                   Placeholder="ID del Cliente"
+                   PlaceholderColor="#b5b5b5"
+                   FontFamily="Montserrat"
+                   FontSize="17"
+                   HorizontalTextAlignment="Center"
+                   BackgroundColor="#f9f2f5"
+                   WidthRequest="500"/>
 
-            <Label Text="Total" FontAttributes="Bold"/>
-            <Entry x:Name="TotalEntry"
-                   Placeholder="₡"
-                   Keyboard="Numeric" />
+            <!-- Nombre Cliente -->
+            <Entry x:Name="NombreClienteEntry"
+                   Placeholder="Nombre del cliente"
+                   PlaceholderColor="#b5b5b5"
+                   FontFamily="Montserrat"
+                   FontSize="17"
+                   HorizontalTextAlignment="Center"
+                   BackgroundColor="#f9f2f5"
+                   WidthRequest="500"/>
 
-            <Button Text="Agregar Venta"
-                    Clicked="OnAgregarVentaClicked"
-                    BackgroundColor="Green"
-                    TextColor="White"/>
+            <!-- Total de Venta -->
+            <Entry x:Name="TotalVentaEntry"
+                   Placeholder="Total de la venta"
+                   Keyboard="Numeric"
+                   PlaceholderColor="#b5b5b5"
+                   FontFamily="Montserrat"
+                   FontSize="17"
+                   HorizontalTextAlignment="Center"
+                   BackgroundColor="#f9f2f5"
+                   WidthRequest="500"/>
+
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                <!-- Picker sin etiqueta, solo el Picker centrado -->
+                <Picker x:Name="MetodoPagoPicker"
+                    Title="Seleccionar Método"
+                    FontFamily="Montserrat"
+                    FontSize="17"
+                    TextColor="Black"
+                    BackgroundColor="#f9f2f5"
+                    HorizontalTextAlignment="Center"
+                    WidthRequest="500"
+                   SelectedIndexChanged="OnMetodoPagoSelectedIndexChanged"/>
+            </HorizontalStackLayout>
+
+
+            <!-- Estado de Completado -->
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                <Label Text="Completado"
+                       FontFamily="Montserrat"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="Black"
+                       VerticalOptions="Center"/>
+                <Switch x:Name="CompletadoSwitch"
+                        HorizontalOptions="Start"/>
+            </HorizontalStackLayout>
+
+            <!-- Botón estilizado -->
+            <Border StrokeThickness="0"
+                    BackgroundColor="Transparent"
+                    WidthRequest="300"
+                    HeightRequest="40"
+                    Padding="0"
+                    StrokeShape="RoundRectangle 15">
+                <Border.Shadow>
+                    <Shadow Brush="Black" 
+                            Radius="12"
+                            Opacity="0.4"/>
+                </Border.Shadow>
+
+                <Button x:Name="AgregarVentaBtn"
+                        Text="Agregar Venta"
+                        Clicked="OnAgregarVentaClicked"
+                        FontFamily="Montserrat"
+                        FontAttributes="Bold"
+                        FontSize="22"
+                        TextColor="White"
+                        WidthRequest="300"
+                        HeightRequest="40"
+                        Padding="10"
+                        CornerRadius="15"
+                        BackgroundColor="#a37281"
+                        VerticalOptions="Center">
+                    <Button.Triggers>
+                        <Trigger TargetType="Button" Property="IsPressed" Value="True">
+                            <Setter Property="Scale" Value="0.95"/>
+                            <Setter Property="Opacity" Value="0.8"/>
+                        </Trigger>
+                    </Button.Triggers>
+                </Button>
+            </Border>
 
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
-
-

@@ -4,14 +4,57 @@
              x:Class="Proyecto.Views.ReportesPage"
              Title="Reportes">
 
+
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <!-- Rosado muy pálido tipo blush -->
+            <GradientStop Color="#FFF1F3" Offset="0.0"/>
+            <!-- Salmón claro pastel -->
+            <GradientStop Color="#FFD6D0" Offset="0.3"/>
+            <!-- Rosado suave tipo piel -->
+            <GradientStop Color="LightPink" Offset="0.6"/>
+            <!-- Coral pálido / rosado cálido -->
+            <GradientStop Color="Plum" Offset="1.0"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
+    
+
     <ScrollView>
-        <VerticalStackLayout Padding="30,0" Spacing="20">
+        <VerticalStackLayout Padding="80,20" Spacing="20">
 
+            <!-- Título estilizado -->
+            <Border StrokeThickness="0" BackgroundColor="Transparent">
+                <Border.Shadow>
+                    <Shadow Brush="Gray" Radius="5" Opacity="0.6" Offset="2,2"/>
+                </Border.Shadow>
+                <Label
+                    Text="Generar un reporte"
+                    HorizontalTextAlignment="Center"
+                    FontFamily="Montserrat"
+                    FontSize="30"
+                    FontAttributes="Italic"
+                    TextColor="Black"/>
+            </Border>
+            
+
+            <!-- Subtítulo -->
             <Label Text="Seleccione el tipo de reporte:"
-                   FontSize="Medium"
-                   FontAttributes="Bold"/>
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   FontFamily="Montserrat"
+                   TextColor="Black"
+                   HorizontalOptions="Center"/>
 
-            <Picker x:Name="ReportesPicker" Title="Seleccione un reporte">
+            <!-- Picker estilizado -->
+            <Picker x:Name="ReportesPicker"
+                    Title=""
+                    FontFamily="Montserrat"
+                    FontSize="17"
+                    BackgroundColor="#f9f2f5"
+                    TextColor="Black"
+                    TitleColor="#777"
+                    WidthRequest="350"
+                    HorizontalOptions="Center">
                 <Picker.ItemsSource>
                     <x:Array Type="{x:Type x:String}">
                         <x:String>Ventas realizadas</x:String>
@@ -22,16 +65,58 @@
                 </Picker.ItemsSource>
             </Picker>
 
-            <Button Text="Generar Reporte"
-                    Clicked="OnGenerarReporteClicked"/>
+            <!-- Botón estilizado -->
+            <Border StrokeThickness="0"
+                    BackgroundColor="Transparent"
+                    WidthRequest="300"
+                    HeightRequest="40"
+                    Padding="0"
+                    StrokeShape="RoundRectangle 15">
+                <Border.Shadow>
+                    <Shadow Brush="Black"
+                            Radius="12"
+                            Opacity="0.4"/>
+                </Border.Shadow>
+
+                <Button Text="Generar Reporte"
+                        Clicked="OnGenerarReporteClicked"
+                        FontFamily="Montserrat"
+                        FontAttributes="Bold"
+                        FontSize="22"
+                        TextColor="White"
+                        WidthRequest="300"
+                        HeightRequest="40"
+                        Padding="10"
+                        CornerRadius="15"
+                        BackgroundColor="#a37281"
+                        VerticalOptions="Center">
+                    <Button.Triggers>
+                        <Trigger TargetType="Button" Property="IsPressed" Value="True">
+                            <Setter Property="Scale" Value="0.95"/>
+                            <Setter Property="Opacity" Value="0.8"/>
+                        </Trigger>
+                    </Button.Triggers>
+                </Button>
+            </Border>
 
             <!-- Área para mostrar resultados -->
-            <CollectionView x:Name="ReportesCollectionView" SelectionMode="None">
+            <CollectionView x:Name="ReportesCollectionView"
+                            SelectionMode="None"
+                            BackgroundColor="#f3ede7"
+                            WidthRequest="350"
+                            HorizontalOptions="Center">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Padding="10">
-                            <Label Text="{Binding}" FontSize="14"/>
-                        </StackLayout>
+                        <Frame BackgroundColor="White"
+                               BorderColor="#ddd"
+                               CornerRadius="10"
+                               Padding="10"
+                               Margin="5,5">
+                            <Label Text="{Binding}"
+                                   FontFamily="Montserrat"
+                                   FontSize="15"
+                                   TextColor="Black"/>
+                        </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

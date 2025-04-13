@@ -42,44 +42,44 @@
 
     <ShellContent
         Title="Inicio"
-        Shell.BackgroundColor="Beige"
-        Shell.TitleColor="gray"
+        Shell.BackgroundColor="RosyBrown"
+        Shell.TitleColor="White"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
         
 
     <ShellContent
         Title="Clientes"
-        Shell.BackgroundColor="beige"
-        Shell.TitleColor="gray"
+        Shell.BackgroundColor="RosyBrown"
+        Shell.TitleColor="White"
         ContentTemplate="{DataTemplate views:ClientesPage}"
         Route="Clientes" />
 
     <ShellContent
         Title="Inventario"
-        Shell.BackgroundColor="Beige"
-        Shell.TitleColor="gray"
+        Shell.BackgroundColor="RosyBrown"
+        Shell.TitleColor="White"
         ContentTemplate="{DataTemplate views:InventarioPage}"
         Route="Inventario" />
 
     <ShellContent
         Title="Ventas"
-        Shell.BackgroundColor="Beige"
-        Shell.TitleColor="gray"
+        Shell.BackgroundColor="RosyBrown"
+        Shell.TitleColor="White"
         ContentTemplate="{DataTemplate views:VentasPage}"
         Route="Ventas" />
 
     <ShellContent
         Title="Apartados"
-        Shell.BackgroundColor="Beige"
-        Shell.TitleColor="gray"
+        Shell.BackgroundColor="RosyBrown"
+        Shell.TitleColor="White"
         ContentTemplate="{DataTemplate views:ApartadosPage}"
         Route="Apartados" />
 
     <ShellContent
         Title="Reportes"
-        Shell.BackgroundColor="Transparent"
-        Shell.TitleColor="gray"
+        Shell.BackgroundColor="RosyBrown"
+        Shell.TitleColor="White"
         ContentTemplate="{DataTemplate views:ReportesPage}"
         Route="Reportes" />
 
@@ -88,7 +88,8 @@
             <Label 
                 Text="© 2025 GALALUNA Boutique" 
                 HorizontalOptions="Center" 
-                Opacity="0.6" />
+                Opacity="0.6" 
+                TextColor="Black"/>
         </StackLayout>
     </Shell.FlyoutFooter>
 

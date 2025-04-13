@@ -1,45 +1,128 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Proyecto.Views.ApartadosPage"
              Title="Apartados">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="30,0" Spacing="20">
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <!-- Rosado muy pálido tipo blush -->
+            <GradientStop Color="#FFF1F3" Offset="0.0"/>
+            <!-- Salmón claro pastel -->
+            <GradientStop Color="#FFD6D0" Offset="0.3"/>
+            <!-- Rosado suave tipo piel -->
+            <GradientStop Color="LightPink" Offset="0.6"/>
+            <!-- Coral pálido / rosado cálido -->
+            <GradientStop Color="Plum" Offset="1.0"/>
+        </LinearGradientBrush>
+    </ContentPage.Background>
 
-            <!-- ID del Cliente -->
-            <Entry
-                x:Name="IDClienteEntry"
-                Placeholder="ID del Cliente"
-                />
+    <ScrollView>
+        <VerticalStackLayout Padding="80,20" Spacing="20">
+
+            <!-- Título con sombra -->
+            <Border StrokeThickness="0" BackgroundColor="Transparent">
+                <Border.Shadow>
+                    <Shadow Brush="Gray" Radius="5" Opacity="0.6" Offset="2,2"/>
+                </Border.Shadow>
+                <Label
+                    Text="Registrar un apartado"
+                    HorizontalTextAlignment="Center"
+                    FontFamily="Montserrat"
+                    FontSize="30"
+                    FontAttributes="Italic"
+                    TextColor="Black"/>
+            </Border>
+
+            <!-- ID Cliente -->
+            <Entry x:Name="IDClienteEntry"
+                   Placeholder="ID del Cliente"
+                   PlaceholderColor="#b5b5b5"
+                   FontFamily="Montserrat"
+                   FontSize="17"
+                   HorizontalTextAlignment="Center"
+                   BackgroundColor="#f9f2f5"
+                   WidthRequest="500"/>
+
+            <!-- Nombre Cliente -->
+            <Entry x:Name="NombreClienteEntry"
+                   Placeholder="Nombre del cliente"
+                   PlaceholderColor="#b5b5b5"
+                   FontFamily="Montserrat"
+                   FontSize="17"
+                   HorizontalTextAlignment="Center"
+                   BackgroundColor="#f9f2f5"
+                   WidthRequest="500"/>
 
             <!-- Abono -->
-            <Entry
-                x:Name="AbonoEntry"
-                Placeholder="Abono inicial"
-                Keyboard="Numeric"
-                />
+            <Entry x:Name="AbonoEntry"
+                   Placeholder="Abono inicial"
+                   Keyboard="Numeric"
+                   PlaceholderColor="#b5b5b5"
+                   FontFamily="Montserrat"
+                   FontSize="17"
+                   HorizontalTextAlignment="Center"
+                   BackgroundColor="#f9f2f5"
+                   WidthRequest="500"/>
 
             <!-- Total -->
-            <Entry
-                x:Name="TotalEntry"
-                Placeholder="Total a pagar"
-                Keyboard="Numeric"
-                />
+            <Entry x:Name="TotalEntry"
+                   Placeholder="Total a pagar"
+                   Keyboard="Numeric"
+                   PlaceholderColor="#b5b5b5"
+                   FontFamily="Montserrat"
+                   FontSize="17"
+                   HorizontalTextAlignment="Center"
+                   BackgroundColor="#f9f2f5"
+                   WidthRequest="500"/>
 
             <!-- Estado de Completado -->
-            <StackLayout Orientation="Horizontal">
-                <Label Text="¿Completado?" VerticalOptions="Center"/>
-                <Switch x:Name="CompletadoSwitch"/>
-            </StackLayout>
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                <Label Text="Completado"
+                       FontFamily="Montserrat"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="Black"
+                       VerticalOptions="Center"/>
+                <Switch x:Name="CompletadoSwitch"
+                        HorizontalOptions="Start"/>
+            </HorizontalStackLayout>
 
-            <!-- Botón para agregar el apartado -->
-            <Button
-                x:Name="AgregarApartadoBtn"
-                Text="Agregar Apartado"
-                Clicked="OnAgregarApartadoClicked"
-                HorizontalOptions="Fill" />
+            <!-- Botón estilizado -->
+            <Border StrokeThickness="0"
+                    BackgroundColor="Transparent"
+                    WidthRequest="300"
+                    HeightRequest="40"
+                    Padding="0"
+                    StrokeShape="RoundRectangle 15">
+                <Border.Shadow>
+                    <Shadow Brush="Black" 
+                            Radius="12"
+                            Opacity="0.4"/>
+                </Border.Shadow>
+
+                <Button x:Name="AgregarApartadoBtn"
+                        Text="Agregar Apartado"
+                        Clicked="OnAgregarApartadoClicked"
+                        FontFamily="Montserrat"
+                        FontAttributes="Bold"
+                        FontSize="22"
+                        TextColor="White"
+                        WidthRequest="300"
+                        HeightRequest="40"
+                        Padding="10"
+                        CornerRadius="15"
+                        BackgroundColor="#a37281"
+                        VerticalOptions="Center">
+                    <Button.Triggers>
+                        <Trigger TargetType="Button" Property="IsPressed" Value="True">
+                            <Setter Property="Scale" Value="0.95"/>
+                            <Setter Property="Opacity" Value="0.8"/>
+                        </Trigger>
+                    </Button.Triggers>
+                </Button>
+            </Border>
 
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>
