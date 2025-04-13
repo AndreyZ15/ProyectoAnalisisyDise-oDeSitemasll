@@ -20,6 +20,8 @@ namespace Proyecto.Models
         public List<DetalleVenta> Detalles { get; set; } = new List<DetalleVenta>();
 
 
+
+
     }
 }
  

@@ -9,11 +9,11 @@
             <!-- Rosado muy pálido tipo blush -->
             <GradientStop Color="#FFF1F3" Offset="0.0"/>
             <!-- Salmón claro pastel -->
-            <GradientStop Color="#FFD6D0" Offset="0.3"/>
+            <GradientStop Color="#e5b5c4" Offset="0.3"/>
             <!-- Rosado suave tipo piel -->
-            <GradientStop Color="LightPink" Offset="0.6"/>
+            <GradientStop Color="RosyBrown" Offset="0.6"/>
             <!-- Coral pálido / rosado cálido -->
-            <GradientStop Color="Plum" Offset="1.0"/>
+            <GradientStop Color="RosyBrown" Offset="1.0"/>
         </LinearGradientBrush>
     </ContentPage.Background>
 
@@ -34,25 +34,29 @@
                     TextColor="Black"/>
             </Border>
 
-            <!-- ID Cliente -->
-            <Entry x:Name="IDClienteEntry"
-                   Placeholder="ID del Cliente"
-                   PlaceholderColor="#b5b5b5"
-                   FontFamily="Montserrat"
-                   FontSize="17"
-                   HorizontalTextAlignment="Center"
-                   BackgroundColor="#f9f2f5"
-                   WidthRequest="500"/>
+            <Picker x:Name="ClientePicker"
+                    Title="Seleccionar Cliente"
+                    FontFamily="Montserrat"
+                    FontSize="17"
+                    TextColor="Black"
+                    BackgroundColor="#f9f2f5"
+                    HorizontalTextAlignment="Center"
+                    WidthRequest="500" 
+                    TitleColor="Black"
+                    ItemDisplayBinding="{Binding IDCliente}"
+                    SelectedIndexChanged="OnClientePickerSelectedIndexChanged"/>
 
-            <!-- Nombre Cliente -->
-            <Entry x:Name="NombreClienteEntry"
-                   Placeholder="Nombre del cliente"
-                   PlaceholderColor="#b5b5b5"
-                   FontFamily="Montserrat"
-                   FontSize="17"
-                   HorizontalTextAlignment="Center"
-                   BackgroundColor="#f9f2f5"
-                   WidthRequest="500"/>
+            <!-- Datos del cliente seleccionado -->
+            <VerticalStackLayout Spacing="5" Padding="0,10,0,0">
+                <Label x:Name="NombreClienteLabel"
+           Text="Nombre: "
+           FontFamily="Montserrat"
+               HorizontalOptions="Center"
+           FontSize="15"
+           TextColor="Black" />
+            </VerticalStackLayout>
+
+
 
             <!-- Abono -->
             <Entry x:Name="AbonoEntry"
@@ -112,7 +116,7 @@
                         HeightRequest="40"
                         Padding="10"
                         CornerRadius="15"
-                        BackgroundColor="#a37281"
+                        BackgroundColor="#996374"
                         VerticalOptions="Center">
                     <Button.Triggers>
                         <Trigger TargetType="Button" Property="IsPressed" Value="True">

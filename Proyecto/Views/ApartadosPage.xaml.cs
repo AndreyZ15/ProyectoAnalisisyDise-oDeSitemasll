@@ -9,22 +9,63 @@ public partial class ApartadosPage : ContentPage
 {
     private readonly FireBaseService _firebaseService;
     public ObservableCollection<Apartado> Apartados { get; set; } = new ObservableCollection<Apartado>();
-
+    public ObservableCollection<Cliente> Clientes { get; set; } = new ObservableCollection<Cliente>();
     public ApartadosPage()
     {
         InitializeComponent();
         _firebaseService = Application.Current.Handler.MauiContext.Services.GetService<FireBaseService>();
+        ClientePicker.ItemsSource = Clientes;
+
+        CargarClientes();
     }
 
+    private async void CargarClientes()
+    {
+        try
+        {
+            var clientes = await _firebaseService.GetAllClientesAsync();
+            Clientes.Clear();
+            foreach (var cliente in clientes)
+            {
+                Clientes.Add(cliente);
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", $"No se pudieron cargar los clientes: {ex.Message}", "OK");
+        }
+    }
+
+    private void OnClientePickerSelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (ClientePicker.SelectedItem is Cliente clienteSeleccionado)
+        {
+            // Actualizar las etiquetas con los datos del cliente seleccionado
+            NombreClienteLabel.Text = $"Nombre: {clienteSeleccionado.Nombre} {clienteSeleccionado.Apellido}";
+        }
+        else
+        {
+            // Limpiar las etiquetas si no hay cliente seleccionado
+            NombreClienteLabel.Text = "Nombre: ";
+
+        }
+    }
     private async void OnAgregarApartadoClicked(object sender, EventArgs e)
     {
-        string idCliente = IDClienteEntry.Text;
+        // Obtener el cliente seleccionado del Picker
+        if (ClientePicker.SelectedItem is not Cliente clienteSeleccionado)
+        {
+            await DisplayAlert("Error", "Por favor, seleccione un cliente.", "OK");
+            return;
+        }
+
+        // Validar los valores de abono y total
         bool esAbonoValido = decimal.TryParse(AbonoEntry.Text, out decimal abono);
         bool esTotalValido = decimal.TryParse(TotalEntry.Text, out decimal total);
         bool completado = CompletadoSwitch.IsToggled;
 
         // Validación de los datos ingresados
-        if (string.IsNullOrEmpty(idCliente) || !esAbonoValido || !esTotalValido)
+        if (!esAbonoValido || !esTotalValido)
         {
             await DisplayAlert("Error", "Por favor, complete todos los campos correctamente.", "OK");
             return;
@@ -32,14 +73,6 @@ public partial class ApartadosPage : ContentPage
 
         try
         {
-            // Validar que el cliente exista
-            var cliente = await _firebaseService.GetClienteAsync(idCliente);
-            if (cliente == null)
-            {
-                await DisplayAlert("Error", "El cliente especificado no existe.", "OK");
-                return;
-            }
-
             // Validar que el abono no sea mayor que el total
             if (abono > total)
             {
@@ -50,7 +83,7 @@ public partial class ApartadosPage : ContentPage
             // Creación del Apartado
             Apartado nuevoApartado = new Apartado
             {
-                IDCliente = idCliente,
+                IDCliente = clienteSeleccionado.IDCliente,
                 Abono = abono,
                 Total = total,
                 Completado = completado,
@@ -65,7 +98,7 @@ public partial class ApartadosPage : ContentPage
             Apartados.Add(nuevoApartado);
 
             // Limpiar los campos después de agregar el apartado
-            IDClienteEntry.Text = string.Empty;
+            ClientePicker.SelectedItem = null;
             AbonoEntry.Text = string.Empty;
             TotalEntry.Text = string.Empty;
             CompletadoSwitch.IsToggled = false;
@@ -77,4 +110,5 @@ public partial class ApartadosPage : ContentPage
             await DisplayAlert("Error", $"No se pudo guardar el apartado: {ex.Message}", "OK");
         }
     }
+
 }

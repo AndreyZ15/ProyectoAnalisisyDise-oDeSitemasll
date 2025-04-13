@@ -24,6 +24,23 @@ public partial class VentasPage : ContentPage
         CargarVentas();
     }
 
+    private void OnClientePickerSelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (ClientePicker.SelectedItem is Cliente clienteSeleccionado)
+        {
+            // Actualizar las etiquetas con los datos del cliente seleccionado
+            NombreClienteLabel.Text = $"Nombre: {clienteSeleccionado.Nombre} {clienteSeleccionado.Apellido}";
+
+
+        }
+        else
+        {
+            // Limpiar las etiquetas si no hay cliente seleccionado
+            NombreClienteLabel.Text = "Nombre: ";
+            
+        }
+    }
+
     private async void CargarClientes()
     {
         try
@@ -104,6 +121,7 @@ public partial class VentasPage : ContentPage
 
     private void LimpiarCampos()
     {
+        NombreClienteLabel.Text = "Nombre: ";
         ClientePicker.SelectedItem = null;
         MetodoPagoPicker.SelectedItem = null;
         TotalVentaEntry.Text = string.Empty;

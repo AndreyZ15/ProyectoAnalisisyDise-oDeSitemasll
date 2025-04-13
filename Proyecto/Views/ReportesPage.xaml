@@ -10,11 +10,11 @@
             <!-- Rosado muy pálido tipo blush -->
             <GradientStop Color="#FFF1F3" Offset="0.0"/>
             <!-- Salmón claro pastel -->
-            <GradientStop Color="#FFD6D0" Offset="0.3"/>
+            <GradientStop Color="#e5b5c4" Offset="0.3"/>
             <!-- Rosado suave tipo piel -->
-            <GradientStop Color="LightPink" Offset="0.6"/>
+            <GradientStop Color="RosyBrown" Offset="0.6"/>
             <!-- Coral pálido / rosado cálido -->
-            <GradientStop Color="Plum" Offset="1.0"/>
+            <GradientStop Color="RosyBrown" Offset="1.0"/>
         </LinearGradientBrush>
     </ContentPage.Background>
     
@@ -88,7 +88,7 @@
                         HeightRequest="40"
                         Padding="10"
                         CornerRadius="15"
-                        BackgroundColor="#a37281"
+                        BackgroundColor="#996374"
                         VerticalOptions="Center">
                     <Button.Triggers>
                         <Trigger TargetType="Button" Property="IsPressed" Value="True">

@@ -38,16 +38,30 @@ public partial class ClientesPage : ContentPage
 
     private async void OnAgregarClienteClicked(object sender, EventArgs e)
     {
+        string cedula = IDClienteEntry.Text;
         string nombre = NombreClienteEntry.Text;
         string apellido = ApellidoClienteEntry.Text;
         string correo = CorreoClienteEntry.Text;
         string telefono = TelefonoClienteEntry.Text;
 
+
         // Validación
-        if (string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(apellido) ||
+        if  (string.IsNullOrEmpty(cedula) || string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(apellido) ||
             string.IsNullOrEmpty(correo) || string.IsNullOrEmpty(telefono))
         {
             await DisplayAlert("Error", "Todos los campos son obligatorios", "OK");
+            return;
+        }
+
+        if (cedula.Length < 9 || cedula.Length > 9) 
+        {
+            await DisplayAlert("Error", "La cédula debe tener exactamente 9 dígitos", "OK");
+            return;
+        }
+
+        if (!cedula.All(char.IsDigit))
+        {
+            await DisplayAlert("Error", "La cedula debe contener solo números", "OK");
             return;
         }
 
@@ -74,11 +88,12 @@ public partial class ClientesPage : ContentPage
             // Crear el objeto Cliente
             Cliente nuevoCliente = new Cliente
             {
+                IDCliente = cedula,
                 Nombre = nombre,
                 Apellido = apellido,
                 Correo = correo,
                 Telefono = telefono,
-                IDCliente = Guid.NewGuid().ToString()
+               
             };
 
             // Guardar en Firebase
@@ -98,8 +113,11 @@ public partial class ClientesPage : ContentPage
         }
     }
 
+
+
     private void LimpiarCampos()
     {
+        IDClienteEntry.Text = string.Empty;
         NombreClienteEntry.Text = string.Empty;
         ApellidoClienteEntry.Text = string.Empty;
         CorreoClienteEntry.Text = string.Empty;

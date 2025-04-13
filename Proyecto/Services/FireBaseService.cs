@@ -36,7 +36,7 @@ namespace Proyecto.Services
 
             return clientes.Select(item => new Cliente
             {
-                IDCliente = item.Key,
+                IDCliente = item.Object.IDCliente,
                 Nombre = item.Object.Nombre,
                 Apellido = item.Object.Apellido,
                 Telefono = item.Object.Telefono,
@@ -103,6 +103,7 @@ namespace Proyecto.Services
                 Marca = item.Object.Marca,
                 Talla = item.Object.Talla,
                 Detalle = item.Object.Detalle,
+                Cantidad = item.Object.Cantidad,
                 Precio = item.Object.Precio
             }).ToList();
         }

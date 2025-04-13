@@ -9,11 +9,11 @@
             <!-- Rosado muy pálido tipo blush -->
             <GradientStop Color="#FFF1F3" Offset="0.0"/>
             <!-- Salmón claro pastel -->
-            <GradientStop Color="#FFD6D0" Offset="0.3"/>
+            <GradientStop Color="#e5b5c4" Offset="0.3"/>
             <!-- Rosado suave tipo piel -->
-            <GradientStop Color="LightPink" Offset="0.6"/>
+            <GradientStop Color="RosyBrown" Offset="0.6"/>
             <!-- Coral pálido / rosado cálido -->
-            <GradientStop Color="Plum" Offset="1.0"/>
+            <GradientStop Color="RosyBrown" Offset="1.0"/>
         </LinearGradientBrush>
     </ContentPage.Background>
 
@@ -97,6 +97,17 @@
                    WidthRequest="500"
                    TextColor="Black"/>
 
+            <Entry x:Name="CantidadEntry"
+                   Placeholder="Cantidad"
+                   Keyboard="Numeric"
+                   PlaceholderColor="#b5b5b5"
+                   FontFamily="Montserrat"
+                   FontSize="17"
+                   HorizontalTextAlignment="Center"
+                   BackgroundColor="#f9f2f5"
+                   WidthRequest="500"
+                   TextColor="Black"/>
+
             <Entry x:Name="PrecioEntry"
                    Placeholder="Precio"
                    Keyboard="Numeric"
@@ -113,36 +124,105 @@
 
 
                 <Button Text="Agregar" Clicked="OnAgregarProductoClicked"
-                        FontFamily="Montserrat" FontSize="16" BackgroundColor="#a37281"
+                        FontFamily="Montserrat" FontSize="16" BackgroundColor="#996374"
                         TextColor="White" WidthRequest="100" CornerRadius="10"/>
                 <Button Text="Editar" Clicked="OnEditarProductoClicked"
-                        FontFamily="Montserrat" FontSize="16" BackgroundColor="#a37281"
+                        FontFamily="Montserrat" FontSize="16" BackgroundColor="#996374"
                         TextColor="White" WidthRequest="100" CornerRadius="10"/>
                 <Button Text="Eliminar" Clicked="OnEliminarProductoClicked"
-                        FontFamily="Montserrat" FontSize="16" BackgroundColor="#a37281"
+                        FontFamily="Montserrat" FontSize="16" BackgroundColor="#996374"
                         TextColor="White" WidthRequest="100" CornerRadius="10"/>
+
+            </StackLayout>
+            
+
+            <StackLayout Orientation="Horizontal" Spacing="10" HorizontalOptions="Center" Padding="0,20,0,0">
+
                 <Button Text="Actualizar" Clicked="OnActualizarProductosClicked"
-                        FontFamily="Montserrat" FontSize="16" BackgroundColor="#a37281"
-                        TextColor="White" WidthRequest="100" CornerRadius="10"/>
+             FontFamily="Montserrat" FontSize="16" BackgroundColor="#ff0a57"
+             TextColor="White" WidthRequest="100" CornerRadius="10"/>
+                
             </StackLayout>
 
+
             <!-- Lista de Productos -->
-            <CollectionView x:Name="ProductosCollectionView" SelectionMode="Single">
+            <CollectionView x:Name="ProductosCollectionView" SelectionMode="Single" Margin="10" >
+                <CollectionView.ItemsLayout>
+                    <!-- Configuración de cuadrícula con espaciado -->
+                    <GridItemsLayout Orientation="Vertical" Span="4" HorizontalItemSpacing="10" VerticalItemSpacing="10" />
+                </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame BackgroundColor="#fef9ef" Padding="10" CornerRadius="10" Margin="5">
-                            <StackLayout>
-                                <Label Text="{Binding Nombre}" FontAttributes="Bold" FontFamily="Montserrat"/>
-                                <Label Text="{Binding Marca}" FontFamily="Montserrat"/>
-                                <Label Text="{Binding Color}" FontFamily="Montserrat"/>
-                                <Label Text="{Binding Precio, StringFormat='₡{0:N2}'}"
-                                       FontFamily="Montserrat"
-                                       TextColor="Green"/>
-                            </StackLayout>
-                        </Frame>
+                        <Border BackgroundColor="#ffffff" Padding="10" Margin="5" >
+                            <VerticalStackLayout Spacing="10" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                <!-- ID del producto -->
+                                <Label Text="{Binding IDProducto}" 
+                           FontAttributes="Bold" 
+                           FontFamily="Montserrat" 
+                           FontSize="13" 
+                           HorizontalTextAlignment="Center"
+                           TextColor="#333333" />
+
+                                <!-- Nombre del producto -->
+                                <Label Text="{Binding Nombre}" 
+                           FontAttributes="Bold" 
+                           FontFamily="Montserrat" 
+                           FontSize="13" 
+                           HorizontalTextAlignment="Center"
+                           TextColor="#4CAF50" />
+
+                                <!-- Marca del producto -->
+                                <Label Text="{Binding Marca}" 
+                           FontFamily="Montserrat" 
+                           FontSize="13" 
+                           HorizontalTextAlignment="Center"
+                           TextColor="#666666" />
+
+                                <!-- Color del producto -->
+                                <Label Text="{Binding Color}" 
+                           FontFamily="Montserrat" 
+                           FontSize="13" 
+                           HorizontalTextAlignment="Center"
+                           TextColor="#999999" />
+
+                                <!-- Talla del producto -->
+                                <Label Text="{Binding Talla}" 
+                           FontFamily="Montserrat" 
+                           FontSize="13" 
+                           HorizontalTextAlignment="Center"
+                           TextColor="#999999" />
+
+                                <!-- Precio del producto -->
+                                <Label Text="{Binding Precio}" 
+                                    FontFamily="Montserrat" 
+                                    FontSize="13" 
+                                    HorizontalTextAlignment="Center"
+                                    TextColor="#999999" />
+
+                                <!-- Detalle del producto -->
+                                
+
+                                <!-- Detalle del producto -->
+                                <Label Text="{Binding Detalle}" 
+                                    FontFamily="Montserrat" 
+                                    FontSize="13" 
+                                    HorizontalTextAlignment="Center"
+                                    TextColor="#999999" />
+
+                                <Label Text="{Binding Cantidad, StringFormat='Cantidad: {0}'}" 
+                                    FontFamily="Montserrat" 
+                                    FontSize="13"                                HorizontalTextAlignment="Center"
+                                    TextColor="#999999" />
+                            </VerticalStackLayout>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
+
+
+
+
 
         </VerticalStackLayout>
     </ScrollView>

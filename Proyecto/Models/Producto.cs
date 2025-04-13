@@ -17,6 +17,7 @@ namespace Proyecto.Models
         public string Marca { get; set; }
         public  string Talla  { get; set; }
         public string Detalle { get; set; }
+        public string Cantidad { get; set; }
         public decimal Precio { get; set; }
 
 
@@ -25,6 +26,7 @@ namespace Proyecto.Models
         public List<Exclusividad> Exclusividades { get; set; } = new List<Exclusividad>();
         public List<DetalleVenta> DetallesVentas { get; set; } = new List<DetalleVenta>();
         public List<DetalleApartado> DetallesApartados { get; set; } = new List<DetalleApartado>();
+
 
 
 

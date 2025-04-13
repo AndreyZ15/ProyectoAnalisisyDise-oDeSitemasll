@@ -50,6 +50,7 @@ public partial class InventarioPage : ContentPage
             MarcaEntry.Text = productoSeleccionado.Marca;
             TallaEntry.Text = productoSeleccionado.Talla;
             DetalleEntry.Text = productoSeleccionado.Detalle;
+            CantidadEntry.Text = productoSeleccionado.Cantidad;
             PrecioEntry.Text = productoSeleccionado.Precio.ToString();
         }
     }
@@ -61,6 +62,7 @@ public partial class InventarioPage : ContentPage
             string.IsNullOrWhiteSpace(ColorEntry.Text) ||
             string.IsNullOrWhiteSpace(TallaEntry.Text) ||
             string.IsNullOrWhiteSpace(DetalleEntry.Text) ||
+            string.IsNullOrWhiteSpace(CantidadEntry.Text) ||
             !decimal.TryParse(PrecioEntry.Text, out decimal precio))
         {
             await DisplayAlert("Error", "Complete todos los campos correctamente.", "OK");
@@ -78,6 +80,7 @@ public partial class InventarioPage : ContentPage
                 Color = ColorEntry.Text,
                 Talla = TallaEntry.Text,
                 Detalle = DetalleEntry.Text,
+                Cantidad = CantidadEntry.Text,
                 Precio = precio
             };
 
@@ -105,6 +108,7 @@ public partial class InventarioPage : ContentPage
                 string.IsNullOrWhiteSpace(ColorEntry.Text) ||
                 string.IsNullOrWhiteSpace(TallaEntry.Text) ||
                 string.IsNullOrWhiteSpace(DetalleEntry.Text) ||
+                string.IsNullOrWhiteSpace(CantidadEntry.Text) ||
                 !decimal.TryParse(PrecioEntry.Text, out decimal precio))
             {
                 await DisplayAlert("Error", "Complete todos los campos correctamente.", "OK");
@@ -118,6 +122,7 @@ public partial class InventarioPage : ContentPage
                 productoSeleccionado.Color = ColorEntry.Text;
                 productoSeleccionado.Talla = TallaEntry.Text;
                 productoSeleccionado.Detalle = DetalleEntry.Text;
+                productoSeleccionado.Cantidad = CantidadEntry.Text;
                 productoSeleccionado.Precio = precio;
 
                 // Actualizar en Firebase
@@ -186,6 +191,7 @@ public partial class InventarioPage : ContentPage
         MarcaEntry.Text = string.Empty;
         TallaEntry.Text = string.Empty;
         DetalleEntry.Text = string.Empty;
+        CantidadEntry.Text = string.Empty;
         PrecioEntry.Text = string.Empty;
         ProductosCollectionView.SelectedItem = null;
     }
