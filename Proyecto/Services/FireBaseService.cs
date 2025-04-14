@@ -217,17 +217,24 @@ namespace Proyecto.Services
 
         public async Task<List<Venta>> GetAllVentasAsync()
         {
-            var ventas = await _firebaseClient
+            var ventasFirebase = await _firebaseClient
                 .Child("ventas")
                 .OnceAsync<Venta>();
 
-            return ventas.Select(item =>
+            var listaVentas = new List<Venta>();
+
+            foreach (var item in ventasFirebase)
             {
-                var venta = item.Object;
-                venta.IDVenta = int.Parse(item.Key);
-                return venta;
-            }).ToList();
+                if (item.Object != null && int.TryParse(item.Key, out int idVenta))
+                {
+                    item.Object.IDVenta = idVenta;
+                    listaVentas.Add(item.Object);
+                }
+            }
+
+            return listaVentas;
         }
+
 
         public async Task<Venta> GetVentaAsync(int idVenta)
         {

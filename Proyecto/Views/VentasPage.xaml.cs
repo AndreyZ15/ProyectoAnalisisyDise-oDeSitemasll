@@ -66,7 +66,10 @@ public partial class VentasPage : ContentPage
             Ventas.Clear();
             foreach (var venta in ventas)
             {
-                Ventas.Add(venta);
+                if (venta != null)
+                {
+                    Ventas.Add(venta);
+                }
             }
         }
         catch (Exception ex)
@@ -99,7 +102,6 @@ public partial class VentasPage : ContentPage
         {
             var nuevaVenta = new Venta
             {
-                IDVenta = new Random().Next(100000, 999999), // Simula un ID único
                 IDCliente = clienteSeleccionado.IDCliente,
                 MetodoPago = metodoPago,
                 Total = total,
@@ -107,7 +109,8 @@ public partial class VentasPage : ContentPage
                 Fecha = DateTime.Now
             };
 
-            await _firebaseService.AddVentaAsync(nuevaVenta);
+            int idVenta = await _firebaseService.AddVentaAsync(nuevaVenta);
+            nuevaVenta.IDVenta = idVenta;
             Ventas.Add(nuevaVenta);
 
             LimpiarCampos();
