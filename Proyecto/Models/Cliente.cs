@@ -17,13 +17,11 @@ namespace Proyecto.Models
 
         //Relaciones 
         public List<Venta> Ventas { get; set; } = new List<Venta>();
-        public List<Apartado> Apartados { get; set; } 
+        public List<Apartado> Apartados { get; set; }
 
         public string NombreCompleto()
         {
-
-            return $" {Nombre} {Apellido} ";
-
+            return $"{Nombre ?? "Sin nombre"} {Apellido ?? "Sin apellido"}";
         }
     }
 }

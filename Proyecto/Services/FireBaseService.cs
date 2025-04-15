@@ -13,6 +13,7 @@ using Firebase.Database;
 using Firebase.Database.Query;
 using Proyecto.Models;
 using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace Proyecto.Services
 {
@@ -217,25 +218,76 @@ namespace Proyecto.Services
 
         public async Task<List<Venta>> GetAllVentasAsync()
         {
-            var ventasFirebase = await _firebaseClient
-                .Child("ventas")
-                .OnceAsync<Venta>();
-
-            var listaVentas = new List<Venta>();
-
-            foreach (var item in ventasFirebase)
+            try
             {
-                if (item.Object != null && int.TryParse(item.Key, out int idVenta))
+                var ventasFirebase = await _firebaseClient
+                    .Child("ventas")
+                    .OnceAsync<Dictionary<string, object>>();
+
+                var listaVentas = new List<Venta>();
+
+                foreach (var ventaData in ventasFirebase)
                 {
-                    item.Object.IDVenta = idVenta;
-                    listaVentas.Add(item.Object);
+                    try
+                    {
+                        var ventaDict = ventaData.Object;
+
+                        // Intentar obtener el ID almacenado en Firebase
+                        int ventaId;
+                        if (ventaDict.ContainsKey("IDVenta") &&
+                            int.TryParse(ventaDict["IDVenta"]?.ToString(), out int storedId))
+                        {
+                            ventaId = storedId;
+                        }
+                        else if (int.TryParse(ventaData.Key, out int keyId))
+                        {
+                            // Si no hay IDVenta, intentar usar la clave del nodo
+                            ventaId = keyId;
+                        }
+                        else
+                        {
+                            // Si todo falla, asignar un número secuencial temporal
+                            ventaId = listaVentas.Count + 1;
+                        }
+
+                        var venta = new Venta { IDVenta = ventaId };
+
+                        // Parsear el resto de propiedades...
+                        if (ventaDict.ContainsKey("IDCliente"))
+                            venta.IDCliente = ventaDict["IDCliente"]?.ToString();
+
+                        if (ventaDict.ContainsKey("MetodoPago"))
+                            venta.MetodoPago = ventaDict["MetodoPago"]?.ToString();
+
+                        if (ventaDict.ContainsKey("Total"))
+                        {
+                            decimal.TryParse(ventaDict["Total"]?.ToString(), out decimal total);
+                            venta.Total = total;
+                        }
+
+                        if (ventaDict.ContainsKey("Fecha"))
+                        {
+                            DateTime.TryParse(ventaDict["Fecha"]?.ToString(), out DateTime fecha);
+                            venta.Fecha = fecha;
+                        }
+
+                        listaVentas.Add(venta);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error al procesar venta: {ex.Message}");
+                    }
                 }
+
+                // Ordenar las ventas por ID para asegurar el orden secuencial
+                return listaVentas.OrderBy(v => v.IDVenta).ToList();
             }
-
-            return listaVentas;
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en GetAllVentasAsync: {ex.Message}");
+                return new List<Venta>();
+            }
         }
-
-
         public async Task<Venta> GetVentaAsync(int idVenta)
         {
             var venta = await _firebaseClient
@@ -249,20 +301,65 @@ namespace Proyecto.Services
 
         public async Task<int> AddVentaAsync(Venta venta)
         {
-            // Obtener el siguiente ID para la venta
-            var ventas = await GetAllVentasAsync();
-            int nextId = ventas.Count > 0 ? ventas.Max(v => v.IDVenta) + 1 : 1;
+            try
+            {
+                // Obtén el próximo ID secuencial
+                int nextId = await GetNextVentaId();
 
-            venta.IDVenta = nextId;
-            venta.Fecha = DateTime.Now;
+                // Datos básicos sin objetos complejos
+                var ventaData = new Dictionary<string, object>
+        {
+            { "IDCliente", venta.IDCliente ?? string.Empty },
+            { "MetodoPago", venta.MetodoPago ?? "Efectivo" },
+            { "Total", venta.Total.ToString(CultureInfo.InvariantCulture) },
+            { "Fecha", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") },
+            { "IDVenta", nextId } // Guardamos el ID secuencial
+        };
 
-            await _firebaseClient
-                .Child("ventas")
-                .Child(nextId.ToString())
-                .PutAsync(venta);
+                // Almacena la venta con el ID secuencial
+                await _firebaseClient
+                    .Child("ventas")
+                    .Child(nextId.ToString())
+                    .PutAsync(ventaData);
 
-            return nextId;
+                return nextId;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al agregar venta: {ex.Message}");
+                throw;
+            }
         }
+
+        public async Task<int> GetNextVentaId()
+        {
+            try
+            {
+                // Primero intentamos leer el contador actual
+                var contadorSnapshot = await _firebaseClient
+                    .Child("contadores")
+                    .Child("ventas")
+                    .OnceSingleAsync<int?>();
+
+                int currentId = contadorSnapshot ?? 0;
+                int nextId = currentId + 1;
+
+                // Actualizamos el contador
+                await _firebaseClient
+                    .Child("contadores")
+                    .Child("ventas")
+                    .PutAsync(nextId);
+
+                return nextId;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al obtener ID: {ex.Message}");
+                // Si hay un error, generamos un ID basado en timestamp como fallback
+                return (int)(DateTime.Now.Ticks % 100000);
+            }
+        }
+
 
         public async Task UpdateVentaAsync(Venta venta)
         {

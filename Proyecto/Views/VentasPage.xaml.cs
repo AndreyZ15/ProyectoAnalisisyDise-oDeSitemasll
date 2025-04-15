@@ -1,15 +1,30 @@
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Proyecto.Models;
 using Proyecto.Services;
-using System;
-using System.Collections.ObjectModel;
 
 namespace Proyecto.Views;
 
-public partial class VentasPage : ContentPage
+public partial class VentasPage : ContentPage, INotifyPropertyChanged
 {
     private readonly FireBaseService _firebaseService;
-    public ObservableCollection<Cliente> Clientes { get; set; } = new ObservableCollection<Cliente>();
-    public ObservableCollection<Venta> Ventas { get; set; } = new ObservableCollection<Venta>();
+    public ObservableCollection<Cliente> Clientes { get; set; } = new();
+    public ObservableCollection<Venta> Ventas { get; set; } = new();
+
+    private bool _isBusy;
+    public bool IsBusy
+    {
+        get => _isBusy;
+        set
+        {
+            if (_isBusy != value)
+            {
+                _isBusy = value;
+                OnPropertyChanged(nameof(IsBusy));
+            }
+        }
+    }
 
     public VentasPage()
     {
@@ -17,28 +32,15 @@ public partial class VentasPage : ContentPage
         _firebaseService = Application.Current.Handler?.MauiContext?.Services.GetService<FireBaseService>()
                            ?? throw new InvalidOperationException("FireBaseService not found in service provider.");
 
+        // Establecer el contexto de datos
+        this.BindingContext = this;
+
         ClientePicker.ItemsSource = Clientes;
         MetodoPagoPicker.ItemsSource = new List<string> { "Efectivo", "Tarjeta", "Transferencia" };
+        VentasCollectionView.ItemsSource = Ventas;
 
         CargarClientes();
         CargarVentas();
-    }
-
-    private void OnClientePickerSelectedIndexChanged(object sender, EventArgs e)
-    {
-        if (ClientePicker.SelectedItem is Cliente clienteSeleccionado)
-        {
-            // Actualizar las etiquetas con los datos del cliente seleccionado
-            NombreClienteLabel.Text = $"Nombre: {clienteSeleccionado.Nombre} {clienteSeleccionado.Apellido}";
-
-
-        }
-        else
-        {
-            // Limpiar las etiquetas si no hay cliente seleccionado
-            NombreClienteLabel.Text = "Nombre: ";
-            
-        }
     }
 
     private async void CargarClientes()
@@ -62,19 +64,64 @@ public partial class VentasPage : ContentPage
     {
         try
         {
+            IsBusy = true;
+
             var ventas = await _firebaseService.GetAllVentasAsync();
             Ventas.Clear();
-            foreach (var venta in ventas)
+
+            foreach (var venta in ventas.OrderByDescending(v => v.Fecha))
             {
-                if (venta != null)
+                // Verificar que el ID no sea cero o negativo
+                if (venta.IDVenta <= 0)
                 {
-                    Ventas.Add(venta);
+                    Console.WriteLine($"ADVERTENCIA: Venta con ID inválido: {venta.IDVenta}");
+                    continue;
                 }
+
+                // Asignar cliente si es posible
+                try
+                {
+                    if (!string.IsNullOrEmpty(venta.IDCliente))
+                    {
+                        venta.Cliente = await _firebaseService.GetClienteAsync(venta.IDCliente);
+                    }
+                    else
+                    {
+                        venta.Cliente = new Cliente { Nombre = "Cliente desconocido" };
+                    }
+                }
+                catch (Exception clienteEx)
+                {
+                    Console.WriteLine($"Error obteniendo cliente: {clienteEx.Message}");
+                    venta.Cliente = new Cliente { Nombre = "Cliente desconocido" };
+                }
+
+                // Agregar a la colección
+                Ventas.Add(venta);
+
+                // Verificar si el binding está funcionando
+                Console.WriteLine($"Agregada venta a UI - ID: {venta.IDVenta}, Cliente: {venta.Cliente?.Nombre}");
             }
         }
         catch (Exception ex)
         {
             await DisplayAlert("Error", $"No se pudieron cargar las ventas: {ex.Message}", "OK");
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    private void OnClientePickerSelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (ClientePicker.SelectedItem is Cliente clienteSeleccionado)
+        {
+            NombreClienteLabel.Text = $"Nombre: {clienteSeleccionado.Nombre} {clienteSeleccionado.Apellido}";
+        }
+        else
+        {
+            NombreClienteLabel.Text = "Nombre: ";
         }
     }
 
@@ -100,25 +147,41 @@ public partial class VentasPage : ContentPage
 
         try
         {
+            IsBusy = true;
+
             var nuevaVenta = new Venta
             {
                 IDCliente = clienteSeleccionado.IDCliente,
                 MetodoPago = metodoPago,
                 Total = total,
-                Cliente = clienteSeleccionado,
                 Fecha = DateTime.Now
             };
 
-            int idVenta = await _firebaseService.AddVentaAsync(nuevaVenta);
-            nuevaVenta.IDVenta = idVenta;
-            Ventas.Add(nuevaVenta);
+            try
+            {
+                int idVenta = await _firebaseService.AddVentaAsync(nuevaVenta);
+                nuevaVenta.IDVenta = idVenta;
+                nuevaVenta.Cliente = clienteSeleccionado;
 
-            LimpiarCampos();
-            await DisplayAlert("Éxito", "Venta agregada correctamente.", "OK");
+                // Insertar al principio de la colección
+                Ventas.Insert(0, nuevaVenta);
+
+                LimpiarCampos();
+                await DisplayAlert("Éxito", "Venta agregada correctamente.", "OK");
+            }
+            catch (Exception fbEx)
+            {
+                Console.WriteLine($"Error al agregar venta: {fbEx.Message}");
+                await DisplayAlert("Error", $"No se pudo agregar la venta. Por favor intente nuevamente. Detalles: {fbEx.Message}", "OK");
+            }
         }
         catch (Exception ex)
         {
-            await DisplayAlert("Error", $"No se pudo agregar la venta: {ex.Message}", "OK");
+            await DisplayAlert("Error", $"Error inesperado: {ex.Message}", "OK");
+        }
+        finally
+        {
+            IsBusy = false;
         }
     }
 
@@ -128,5 +191,6 @@ public partial class VentasPage : ContentPage
         ClientePicker.SelectedItem = null;
         MetodoPagoPicker.SelectedItem = null;
         TotalVentaEntry.Text = string.Empty;
+        CompletadoSwitch.IsToggled = false;
     }
 }
