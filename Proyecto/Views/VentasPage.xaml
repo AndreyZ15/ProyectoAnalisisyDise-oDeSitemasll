@@ -53,6 +53,54 @@
                        TextColor="Black" />
                 </VerticalStackLayout>
 
+                <Picker x:Name="ProductoPicker"
+                        Title="Seleccionar Producto"
+                        FontFamily="Montserrat"
+                        FontSize="17"
+                        TextColor="Black"
+                        BackgroundColor="#f9f2f5"
+                        HorizontalTextAlignment="Center"
+                        WidthRequest="500" 
+                        TitleColor="Black"
+                        ItemsSource="{Binding Productos}" 
+                        ItemDisplayBinding="{Binding IDProducto}"                   
+                        SelectedIndexChanged="OnProductoPickerSelectedIndexChanged" />
+
+
+                <VerticalStackLayout Spacing="5" Padding="0,10,0,0">
+                    <Label x:Name="IDProductoLabel"
+                           Text="ID: "
+                           FontFamily="Montserrat"
+                           FontSize="15"
+                           HorizontalOptions="Center"
+                           TextColor="Black" />
+                    <Label x:Name="MarcaProductoLabel"
+                           Text="Marca: "
+                           FontFamily="Montserrat"
+                           FontSize="15"
+                           HorizontalOptions="Center"
+                           TextColor="Black" />
+                    <Label x:Name="ColorProductoLabel"
+                           Text="Color: "
+                           FontFamily="Montserrat"
+                           FontSize="15"
+                           HorizontalOptions="Center"
+                           TextColor="Black" />
+                    <Label x:Name="TallaProductoLabel"
+                           Text="Talla: "
+                           FontFamily="Montserrat"
+                           FontSize="15"
+                           HorizontalOptions="Center"
+                           TextColor="Black" />
+                    <Label x:Name="PrecioProductoLabel"
+                           Text="Precio: "
+                           FontFamily="Montserrat"
+                           FontSize="15"
+                           HorizontalOptions="Center"
+                           TextColor="Black" />
+                </VerticalStackLayout>
+
+
                 <!-- Método de Pago -->
                 <Picker x:Name="MetodoPagoPicker"
                         Title="Seleccionar Método"
